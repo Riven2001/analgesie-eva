@@ -1,0 +1,137 @@
+<!--
+  Usage interne – confidentiel  
+  Document protégé par le secret médical et la déontologie médico‑légale  
+  Ne pas diffuser en dehors de l’équipe médicale
+-->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Recommandation Analgésique selon EVA</title>
+  <style>
+    body {
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      background: #f4f6f8;
+      color: #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+    h1 {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      color: #1A202C;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 0.5rem;
+      font-size: 1rem;
+      border: 1px solid #CBD5E0;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+    }
+    button {
+      width: 100%;
+      padding: 0.6rem;
+      font-size: 1rem;
+      background: #2B6CB0;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    button:hover {
+      background: #2C5282;
+    }
+    .result {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: #EDF2F7;
+      border-radius: 4px;
+      font-size: 0.95rem;
+      min-height: 4em;
+    }
+    .result ul {
+      padding-left: 1.2em;
+      margin: 0.5em 0 0 0;
+    }
+    .result p {
+      margin: 0.5em 0 0 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Choix de l'Analgésique</h1>
+    <label for="eva">Valeur EVA (0–10) :</label>
+    <input type="number" id="eva" min="0" max="10" value="0">
+    <button onclick="recommander()">Afficher le traitement</button>
+    <div class="result" id="resultat">
+      Entrez une valeur EVA et cliquez sur « Afficher ».
+    </div>
+  </div>
+
+  <script>
+    function recommander() {
+      const eva = parseInt(document.getElementById('eva').value, 10);
+      let html = '';
+
+      if (isNaN(eva) || eva < 0 || eva > 10) {
+        html = 'Veuillez entrer un score EVA valide entre 0 et 10.';
+      }
+      else if (eva <= 5) {
+        html = '<strong>Palier 1 – Douleur légère (EVA ≤ 5)</strong><ul>' +
+               '<li><strong>Doliprane®</strong> (paracétamol) 1 g VO toutes les 6 h, max 3 g/j – Durée 5–7 jours</li>' +
+               '<li><strong>Advil® / Nurofen®</strong> (ibuprofène) 400 mg VO toutes les 6–8 h, max 1 200 mg/j – Durée ≤ 5 jours</li>' +
+               '<li><strong>Voltaren® LP</strong> (diclofénac) 75 mg PO 1×/j ou 50 mg ×3/j – Durée ≤ 3 jours</li>' +
+               '<li><strong>Acupan®</strong> (néfopam) 30 mg VO toutes les 6 h ou 20 mg IV toutes les 4–6 h – Durée 3–5 jours</li>' +
+               '</ul>';
+      }
+      else if (eva <= 7) {
+        html = '<strong>Palier 2 – Douleur modérée (EVA 6–7)</strong><ul>' +
+               '<li><strong>Zaldiar®</strong> (tramadol 37,5 mg + paracétamol 325 mg) 1 cpr toutes les 6 h, max 6 cpr/j – Durée ≤ 5 jours</li>' +
+               '<li><strong>Tachidol®</strong> (codéine 30 mg + paracétamol 500 mg) 1 cpr toutes les 6 h, max 4 cpr/j – Durée 3 jours</li>' +
+               '<li><strong>Izalgi®</strong> (tramadol 75 mg + dexkétoprofène 25 mg) 1 cpr toutes les 8 h, max 3 cpr/j – Durée ≤ 3 jours</li>' +
+               '</ul>';
+      }
+      else {
+        html = '<strong>Palier 3 – Douleur sévère (EVA ≥ 8)</strong><ul>' +
+               '<li><strong>Oramorph® / MS Contin®</strong> (morphine) titration selon protocole – Durée personnalisée</li>' +
+               '<li><strong>Temgesic®</strong> (buprénorphine) 0,2 mg sublingual 1×/j ou patch 1,2 mg/24 h – Durée 72 h</li>' +
+               '<li><strong>Durogesic®</strong> (fentanyl) patch 25–100 µg/h – Durée 72 h</li>' +
+               '<li><strong>OxyContin®</strong> (oxycodone) 10–80 mg VO toutes les 12 h – Durée 5–7 jours</li>' +
+               '<li><strong>Méthadose®</strong> (méthadone) selon protocole – Durée variable</li>' +
+               '</ul>';
+      }
+
+      html += '<p><strong>Adjuvants & co‑analgésiques :</strong></p><ul>' +
+              '<li><strong>Corticostéroïdes</strong> : Dexaméthasone 4–24 mg/j • Prednisone 5–25 mg/j</li>' +
+              '<li><strong>Anticonvulsivants</strong> : Prégabaline (Lyrica®) 75–150 mg/j</li>' +
+              '<li><strong>Antidépresseurs</strong> : Amitriptyline 10–75 mg/j • Duloxétine (Cymbalta®) 30–60 mg/j</li>' +
+              '<li><strong>Benzodiazépines</strong> : Lorazépam®, Midazolam (court terme)</li>' +
+              '<li><strong>Laxatifs</strong> : prophylaxie de la constipation opioïde</li>' +
+              '</ul>';
+
+      document.getElementById('resultat').innerHTML = html;
+    }
+  </script>
+</body>
+</html>
